@@ -75,6 +75,7 @@ inoremap <C-s> <nop>
 
 inoremap <C-BS> <C-w>
 
+nnoremap <C-e> <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 
 
 set clipboard+=unnamedplus
@@ -117,6 +118,14 @@ require("neogen").setup {
 
 require("nvim_comment").setup {
 	
+}
+
+require("lspconfig").clangd.setup {
+	vim.diagnostic.config({
+		virtual_text = false,
+		signs = true,
+		underline = true,	
+	})
 }
 
 EOF
