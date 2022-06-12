@@ -63,7 +63,6 @@ nnoremap <S-Left> :wincmd h<CR>
 
 nnoremap <C-p> :Telescope find_files<CR>
 
-
 nnoremap <C-d> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <S-d> <cmd>lua vim.lsp.buf.declaration()<CR>
 
@@ -76,6 +75,8 @@ inoremap <C-s> <nop>
 inoremap <C-BS> <C-w>
 
 nnoremap <C-e> <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+
+let mapleader = "<Space>"
 
 
 set clipboard+=unnamedplus
@@ -93,12 +94,6 @@ require("which-key").setup {
 }
 
 require("nvim-autopairs").setup {}
-
-require("which-key").setup {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-}
 
 require("nvim-tree").setup {
 	actions = {
@@ -250,5 +245,107 @@ vim.cmd("hi CmpItemAbbrDepreceated guifg=error")
 vim.cmd("hi CmpItemAbbrMatchFuzzy gui=italic guifg=foreground")
 vim.cmd("hi CmpItemKind guifg=#C678DD") -- Boolean
 vim.cmd("hi CmpItemMenu guifg=#928374") -- Comment
+
+
+
+local wk = require("which-key")
+wk.setup({
+	plugins = {
+		marks = true, -- shows a list of your marks on ' and `
+		registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+		-- the presets plugin, adds help for a bunch of default keybindings in Neovim
+		-- No actual key bindings are created
+		presets = {
+			operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+			motions = false, -- adds help for motions
+			text_objects = true, -- help for text objects triggered after entering an operator
+			windows = true, -- default bindings on <c-w>
+			nav = true, -- misc bindings to work with windows
+			z = true, -- bindings for folds, spelling and others prefixed with z
+			g = true, -- bindings for prefixed with g
+		},
+	},
+	-- add operators that will trigger motion and text object completion
+	-- to enable all native operators, set the preset / operators plugin above
+	operators = { ["<C-_>"] = "Comments" },
+	icons = {
+		breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
+		separator = "->", -- symbol used between a key and it's label
+		group = "", -- symbol prepended to a group
+	},
+	window = {
+		border = "shadow", -- none, single, double, shadow
+		position = "bottom", -- bottom, top
+		margin = { 0, 0, 0, 0 }, -- extra window margin [top, left, bottom, right]
+		padding = { 1, 1, 1, 1 }, -- extra window padding [top, left, bottom, right]
+	},
+	layout = {
+		height = { min = 4, max = 10 }, -- min and max height of the columns
+		width = { min = 20, max = 300 }, -- min and max width of the columns
+		spacing = 5, -- spacing between columns
+	},
+	hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
+	show_help = true, -- show help message on the command line when the popup is visible
+	triggers_blacklist = {
+		i = { "^" },
+	},
+})
+
+vim.g.mapleader = LeaderKey
+
+-- Normal mode
+local nmappings = {
+	-- Menus
+	name = "lsp",
+	a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "code action" },
+	d = { "<cmd>Telescope lsp_document_diagnostics<cr>", "doc diagnostics" },
+	D = {
+		"<cmd>Telescope lsp_workspace_diagnostics<cr>",
+		"workspace diagnostics",
+	},
+	f = { "<cmd>lua vim.lsp.buf.formatting_sync()<cr>", "format" },
+	F = { "<cmd>FormatToggle<cr>", "toggle formatting" },
+	["?"] = { "<cmd>LspInfo<cr>", "lsp info" },
+	v = { "<cmd>LspVirtualTextToggle<cr>", "toggle virtual text" },
+	l = {
+		"<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>",
+		"line diagnostics",
+	},
+	r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "rename" },
+	T = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "type defintion" },
+	x = { "<cmd>cclose<cr>", "close quickfix" },
+	s = { "<cmd>Telescope lsp_document_symbols<cr>", "document symbols" },
+	S = { "<cmd>Telescope lsp_workspace_symbols<cr>", "workspace symbols" },
+	R = { "<cmd>LspRestart<cr>", "restart lsp" },
+	i = { "<cmd>normal A  # type: ignore<cr>bbbbhhh", "pyright ignore" },
+	h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "hover" },
+	I = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "implementation" },
+	w = {
+		name = "workspace",
+		a = {
+			"<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
+			"add workspace",
+		},
+		d = {
+			"<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
+			"remove workspace",
+		},
+		l = {
+			"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+			"remove workspace",
+		},
+	},
+}
+
+wk.register(nmappings, {
+	mode = "n",
+	prefix = "l",
+	buffer = nil,
+	silent = true,
+	noremap = true,
+	nowait = false,
+})
+
+
 
 EOF
