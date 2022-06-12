@@ -33,6 +33,8 @@ Plug 'folke/which-key.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'rakr/vim-two-firewatch'
 Plug 'edeneast/nightfox.nvim'
+Plug 'mofiqul/dracula.nvim' 
+
 
 
 call plug#end()
