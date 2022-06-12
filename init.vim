@@ -87,6 +87,12 @@ let mapleader = "<Space>"
 set clipboard+=unnamedplus
 
 lua <<EOF
+require('onedark').setup {
+    style = 'deep'
+}
+require('onedark').load()
+
+
 require('nvim-treesitter.configs').setup {
   highlight = { enable = true },
   indent = { enable = true }
