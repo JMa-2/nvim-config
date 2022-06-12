@@ -34,12 +34,13 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'rakr/vim-two-firewatch'
 Plug 'edeneast/nightfox.nvim'
 Plug 'mofiqul/dracula.nvim' 
-
+Plug 'rebelot/kanagawa.nvim'
+Plug 'navarasu/onedark.nvim'
 
 
 call plug#end()
 
-:colorscheme edge 
+:colorscheme onedark 
 
 
 nnoremap <C-s> :w<CR>
