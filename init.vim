@@ -36,6 +36,9 @@ Plug 'edeneast/nightfox.nvim'
 Plug 'mofiqul/dracula.nvim' 
 Plug 'rebelot/kanagawa.nvim'
 Plug 'navarasu/onedark.nvim'
+Plug 'ellisonleao/glow.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'sindrets/diffview.nvim'
 
 
 call plug#end()
@@ -80,6 +83,8 @@ inoremap <C-s> <nop>
 inoremap <C-BS> <C-w>
 
 nnoremap <C-e> <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+
+nnoremap <Space> <nop>
 
 let mapleader = "<Space>"
 
@@ -307,50 +312,89 @@ vim.g.mapleader = LeaderKey
 -- Normal mode
 local nmappings = {
 	-- Menus
-	name = "lsp",
-	a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "code action" },
-	d = { "<cmd>Telescope lsp_document_diagnostics<cr>", "doc diagnostics" },
-	D = {
-		"<cmd>Telescope lsp_workspace_diagnostics<cr>",
-		"workspace diagnostics",
-	},
-	f = { "<cmd>lua vim.lsp.buf.formatting_sync()<cr>", "format" },
-	F = { "<cmd>FormatToggle<cr>", "toggle formatting" },
-	["?"] = { "<cmd>LspInfo<cr>", "lsp info" },
-	v = { "<cmd>LspVirtualTextToggle<cr>", "toggle virtual text" },
-	l = {
-		"<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>",
-		"line diagnostics",
-	},
-	r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "rename" },
-	T = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "type defintion" },
-	x = { "<cmd>cclose<cr>", "close quickfix" },
-	s = { "<cmd>Telescope lsp_document_symbols<cr>", "document symbols" },
-	S = { "<cmd>Telescope lsp_workspace_symbols<cr>", "workspace symbols" },
-	R = { "<cmd>LspRestart<cr>", "restart lsp" },
-	i = { "<cmd>normal A  # type: ignore<cr>bbbbhhh", "pyright ignore" },
-	h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "hover" },
-	I = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "implementation" },
-	w = {
-		name = "workspace",
-		a = {
-			"<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
-			"add workspace",
+	name = "Which-key",
+    l = {
+        name = "lsp",
+	    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "code action" },
+	    d = { "<cmd>Telescope lsp_document_diagnostics<cr>", "doc diagnostics" },
+	    D = {
+		    "<cmd>Telescope lsp_workspace_diagnostics<cr>",
+		    "workspace diagnostics",
+	    },
+	    f = { "<cmd>lua vim.lsp.buf.formatting_sync()<cr>", "format" },
+	    F = { "<cmd>FormatToggle<cr>", "toggle formatting" },
+	    ["?"] = { "<cmd>LspInfo<cr>", "lsp info" },
+	    v = { "<cmd>LspVirtualTextToggle<cr>", "toggle virtual text" },
+	    l = {
+		    "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>",
+		    "line diagnostics",
+	    },
+	    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "rename" },
+	    T = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "type defintion" },
+	    x = { "<cmd>cclose<cr>", "close quickfix" },
+	    s = { "<cmd>Telescope lsp_document_symbols<cr>", "document symbols" },
+	    S = { "<cmd>Telescope lsp_workspace_symbols<cr>", "workspace symbols" },
+	    R = { "<cmd>LspRestart<cr>", "restart lsp" },
+	    i = { "<cmd>normal A  # type: ignore<cr>bbbbhhh", "pyright ignore" },
+	    h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "hover" },
+	    I = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "implementation" },
+	    w = {
+		    name = "workspace",
+		    a = {
+			    "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
+			    "add workspace",
+		    },
+		    d = {
+			    "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
+			    "remove workspace",
+		    },
+		    l = {
+			    "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+			    "remove workspace",
+		    },
+	    },
+    },
+    d = {
+        name = "diff view",
+        o = {"<cmd>DiffviewOpen<cr>", "open diff view"},
+        c = {"<cmd>DiffviewClose<cr>", "close diff view"},
+        t = {"<cmd>DiffviewToggleFiles<cr>", "toggle files panel"},
+        f = {"<cmd>DiffviewFocusFiles<cr>", "files panel focus"},
+        r = {"<cmd>DiffviewRefresh<cr>", "refresh diff view"},
+        h = {"<cmd>DiffviewFileHistory<cr>", "view file history"},
+    },
+    g = {"<cmd>Glow<cr>", "glow (markdown preview)"},
+    t = {
+		name = "telescope",
+		["."] = {
+			'<cmd>lua require("plugins.telescope").search_dotfiles{}<cr>',
+			"config",
 		},
-		d = {
-			"<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
-			"remove workspace",
+		["?"] = { "<cmd>Telescope filetypes<cr>", "filetypes" },
+		g = { "<cmd>Telescope git_branches<cr>", "git branches" },
+		b = { "<cmd>Telescope buffers<cr>", "buffers" },
+		f = { "<cmd>Telescope find_files<cr>", "files" },
+		h = { "<cmd>Telescope command_history<cr>", "cmd history" },
+		i = { "<cmd>Telescope media_files<cr>", "media" },
+		m = { "<cmd>Telescope marks<cr>", "marks" },
+		M = { "<cmd>Telescope man_pages<cr>", "manuals" },
+		o = { "<cmd>Telescope vim_options<cr>", "options" },
+		t = {
+			'<cmd>Telescope grep_string search="" only_sort_text=true<cr>',
+			"text",
 		},
-		l = {
-			"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-			"remove workspace",
-		},
+		T = { "<cmd>Telescope live_grep<cr>", "exact text" },	
+		r = { "<cmd>Telescope oldfiles<cr>", "recents" },
+		p = { "<cmd>Telescope registers<cr>", "registers" },
+		e = { "<cmd>Telescope file_browser<cr>", "fuzzy explorer" },
+		c = { "<cmd>Telescope colorscheme<cr>", "colorschemes" },
+		q = { "<cmd>Telescope quickfix<cr>", "quickfix" },
 	},
 }
 
 wk.register(nmappings, {
 	mode = "n",
-	prefix = "l",
+	prefix = "<Space>",
 	buffer = nil,
 	silent = true,
 	noremap = true,
