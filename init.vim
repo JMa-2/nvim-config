@@ -84,6 +84,9 @@ nnoremap <C-e> <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 
 nnoremap <Space> <nop>
 
+nnoremap <M-Enter> ^
+inoremap <M-Enter> <C-o>I
+
 let mapleader = "<Space>"
 
 
