@@ -5,3 +5,13 @@
 # NEOVIM INSTALL LOCATION
 
 `https://github.com/neovim/neovim`
+
+# NERD FONTS
+
+`https://www.nerdfonts.com/font-downloads`
+
+# PACKAGES
+
+- ripgrep
+- clangd
+- fzy
