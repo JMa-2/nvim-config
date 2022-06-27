@@ -63,7 +63,7 @@ nnoremap <C-f> :Telescope live_grep<CR>
 nnoremap <C-c> y
 nnoremap <C-x> d
 nnoremap <C-v> p
-nnoremap <C-z> u
+nnoremap <C-z> :undo<CR>
 nnoremap <C-y> :redo<CR>
 
 nnoremap <S-Right> :wincmd l<CR>
@@ -85,7 +85,10 @@ nnoremap <C-e> <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 nnoremap <Space> <nop>
 
 nnoremap <M-Enter> ^
-inoremap <M-Enter> <C-o>I
+inoremap <M-Enter> <C-o>
+
+nnoremap o <nop>
+nnoremap u <nop>
 
 let mapleader = "<Space>"
 
