@@ -80,7 +80,7 @@ nnoremap <C-n> :Neogen<CR>
 
 inoremap <C-s> <nop>
 
-nnoremap <C-e> <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+nnoremap <C-e> <cmd>lua vim.diagnostic.open_float(0, {scope="cursor"})<CR>
 
 nnoremap <Space> <nop>
 
